@@ -5,12 +5,14 @@ Lilikoi computes the pathway deregulation score for a given set of metabolites, 
 "Lilikoi: an R package for personalized pathway-based classification modeling using metabolomics data. F. Alakwaa, S. Huang, and L. Garmire (2018) \doi{10.1101/283408}."
 
 ## Installation
+
 ```
 install.packages("lilikoi")
 
 # Or for the latest dev version:
 devtools::install_github("lanagarmire/lilikoi")
 ```
+
 ## Example
 
 ```
@@ -47,12 +49,13 @@ finalModel <- lilikoi.adjust_model(mlResults$mlResults, PDSmatrix, significantPa
 ```
 
 # Built By
-* Fadhl Alakwaa https://github.com/FADHLyemen
-* Sijia Huang  https://github.com/scarlettcanny
+
+*   Fadhl Alakwaa https://github.com/FADHLyemen
+*   Sijia Huang https://github.com/scarlettcanny
 
 # More Examples
-- Shiny Version: http://lilikoi.garmiregroup.org
-- https://github.com/lanagarmire/lilikoi/lilikoi_example.ipynb
-- https://github.com/lanagarmire/lilikoi/lilikoiExample.r
-- https://mybinder.org/v2/gh/FADHLyemen/lilikoi_Fadhl/master
 
+*   Shiny Version: http://lilikoi.garmiregroup.org
+*   https://github.com/lanagarmire/lilikoi/blob/master/lilikoi_example.ipynb
+*   https://github.com/lanagarmire/lilikoi/blob/master/lilikoiExample.r
+*   https://mybinder.org/v2/gh/FADHLyemen/lilikoi_Fadhl/master
