@@ -9,9 +9,9 @@ test_that("full pipeline works", {
   metaboliteNames <- colnames(metaboliteMeasurements)[-1]
 
   metabolitePathwayTable <- lilikoi.metab_to_pathway(metaboliteNames, "name")
-  PDSmatrix <- lilikoi.get_pd_scores(metaboliteMeasurements, metabolitePathwayTable, lilikoi::data.smpdb[1:23,])
+  PDSmatrix <- lilikoi.get_pd_scores(metaboliteMeasurements, metabolitePathwayTable, lilikoi::data.smpdb[1:23,], maxit = 1)
 
-  significantPathways <- lilikoi.select_pathways(PDSmatrix, metaboliteMeasurements, threshold = 0.62, method = "gain")
+  significantPathways <- lilikoi.select_pathways(PDSmatrix, metaboliteMeasurements, threshold = 0.42, method = "gain")
 
   #mlResults <- lilikoi.machine_learning(PDSmatrix, metaboliteMeasurements$Label, significantPathways)
   #result <- mlResults$res

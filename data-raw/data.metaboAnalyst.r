@@ -1,4 +1,5 @@
 library(tidyverse)
+print("Notice: you may need to manually update the MetaboAnalyst link from: http://www.metaboanalyst.ca/faces/docs/Resources.xhtml")
 system("wget https://www.dropbox.com/s/adkps7jq810dyl4/MetaboAnalyst-4.09.war -O temp/meta.war")
 system("cd temp; jar xvf meta.war")
 

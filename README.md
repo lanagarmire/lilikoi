@@ -48,6 +48,14 @@ finalModel <- lilikoi.adjust_model(mlResults$mlResults, PDSmatrix, significantPa
   metaboliteMeasurements, clinicalFactorsData, factors = c("Age", "Race"))
 ```
 
+## Updating the External Databases
+
+Lilikoi depends on data from HMDB, SMPDB, and MetaboAnalyst. This library ships with the latest data as
+of the date of publication. To update to the latest data from these sources, load and run the
+`lilikoi.update_database()` method found in the `lilikoi.update_database.r` file.
+
+Warning: the datasets are large (>5GB) and this step may take greater than 20 minutes.
+
 # Built By
 
 *   Fadhl Alakwaa https://github.com/FADHLyemen

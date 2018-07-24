@@ -1,4 +1,4 @@
-lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable, pathwayMetaboliteDatabase = lilikoi::data.smpdb) {
+lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable, pathwayMetaboliteDatabase = lilikoi::data.smpdb, maxit = 200) {
   #' A lilikoi.get_pd_scores Function
   #'
   #' This function allows you to compute Pathway Deregulation Score deriving
@@ -8,12 +8,13 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
   #' @param metaboliteMeasurements Metabolite levels
   #' @param metabolitePathwayTable This is the metabolitePathwayTable from lilikoi.metab_to_pathway function. This table includes the metabolite ids and their corresponding HMDB ids
   #' @param pathwayMetaboliteDatabase An external database of metabolites and their associated pathways.
+  #' @param maxit Max iterations for princurve in pathifier algorithm. Lowering increases speed but lowers performance
   #' @examples
   #' filename <- system.file("extdata", "plasma_breast_cancer.csv", package = "lilikoi")
-  #' metaboliteMeasurements <- read.csv(file = filename, check.names = FALSE, row.names = 1)[, 1:20]
-  #' metaboliteNames <- colnames(metaboliteMeasurements)[-1]
+  #' data <- read.csv(file = filename, check.names = FALSE, row.names = 1)[, 1:20]
+  #' metaboliteNames <- colnames(data)[-1]
   #' matches <- lilikoi.metab_to_pathway(metaboliteNames, "name")
-  #' PDSmatrix <- lilikoi.get_pd_scores(metaboliteMeasurements, matches, lilikoi::data.smpdb[1:23,])
+  #' PDSmatrix <- lilikoi.get_pd_scores(data, matches, lilikoi::data.smpdb[1:23,], maxit = 1)
   #' @export
   #' @import dplyr
 
@@ -38,9 +39,10 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
 
   ## although pathifier is built for gene inputs, turns out it works for metabolites as well todo:
   ## figure out why this is so slow
+  maxitSetting <- maxit
   pds <- .quantify_pathways_deregulation(as.matrix(metaboliteLevelsWithHmdbIds), allgenes = metaboliteNames,
     syms = pathwayList, pathwaynames = names(pathwayList), normals = isHealthySample, attempts = 5,
-    min_exp = 0, min_std = 0)
+    min_exp = 0, min_std = 0, maxit = maxitSetting)
 
   pdsMatrix <- matrix(as.data.frame(pds$scores), nrow = length(names(pds$scores)), byrow = TRUE)
 
@@ -110,7 +112,9 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
       start <- stats::aggregate(x, by = list(ranks), FUN = mean)
       start <- as.matrix(start[, -1])
     }
-    c <- princurve::principal_curve(x, start = start, thresh = thresh, maxit = maxit)
+    maxitSetting <- maxit
+    print(maxitSetting)
+    c <- princurve::principal_curve(x, start = start, thresh = thresh, maxit = maxitSetting)
   }
   if (!is.null(c)) {
     d[c$ord[1]] <- 0
@@ -133,11 +137,12 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
   }
 }
 
-.samplings_stdev <- function(m, n, attempts, z, ranks, samplings, start, logfile = "") {
+.samplings_stdev <- function(m, n, attempts, z, ranks, samplings, start, logfile = "", maxit = 200) {
   dall <- array(dim = c(attempts, n))
   skip <- 0
   for (a in 1:attempts) {
-    res <- .score_pathway(z[samplings[a, ], ], m, ranks[samplings[a, ]], start = start, logfile = logfile)
+    maxitSetting <- maxit
+    res <- .score_pathway(z[samplings[a, ], ], m, ranks[samplings[a, ]], start = start, logfile = logfile, maxit = maxitSetting)
     if (!is.null(res)) {
       dall[a, samplings[a, ]] <- res$score
     } else {
@@ -153,7 +158,7 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
 }
 
 .score_all_pathways_helper <- function(z, ranks, samplings, i, attempts, maximize_stability, logfile = "",
-  start) {
+  start, maxit = 200) {
   n <- dim(z)[1]
   k <- dim(z)[2]
   m <- dim(samplings)[2]
@@ -161,11 +166,12 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
   kmin <- max(floor(0.8 * k), mincheck + 1)
   mindelta <- min(0.009, max(0.002, 1.5/k))
   sig <- matrix(0, 1, k)
-  res <- .score_pathway(z, n, ranks, calcerr = TRUE, start = start, logfile = logfile)
+  maxitSetting <- maxit
+  res <- .score_pathway(z, n, ranks, calcerr = TRUE, start = start, logfile = logfile, maxit = maxitSetting)
   if (is.null(res)) {
     cat(file = logfile, append = TRUE, "pathway ", i, "> scoring failed 1.\n")
   } else {
-    sig <- .samplings_stdev(m, n, attempts, z, ranks, samplings, start = start)
+    sig <- .samplings_stdev(m, n, attempts, z, ranks, samplings, start = start, maxit = maxitSetting)
     if (sig > 10000) {
       cat(file = logfile, append = TRUE, "pathway ", i, "> scoring failed 2 (sig:", sig, ").\n")
       res <- NULL
@@ -179,7 +185,7 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
         while ((k >= kmin) & (sig > 0.05)) {
           se <- sort(res$error, index.return = TRUE, decreasing = TRUE)
           for (j in 1:testsig) {
-          newsig[j] <- .samplings_stdev(m, n, attempts, z[, -se$ix[j]], ranks, samplings, start = start)
+          newsig[j] <- .samplings_stdev(m, n, attempts, z[, -se$ix[j]], ranks, samplings, start = start, maxit = maxitSetting)
           }
           wj <- which.min(newsig)
           cat(file = logfile, append = TRUE, "pathway ", i, " k=", k, "(", ncol(res$thecurve$s),
@@ -193,7 +199,7 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
           isin <- isin[-se$ix[wj]]
           z <- z[, -se$ix[wj]]
           k <- k - 1
-          res <- .score_pathway(z, n, ranks, calcerr = TRUE, start = start, logfile = logfile)
+          res <- .score_pathway(z, n, ranks, calcerr = TRUE, start = start, logfile = logfile, maxit = maxitSetting)
           if (is.null(res)) {
           cat(file = logfile, append = TRUE, "pathway ", i, "> scoring failed 3.\n")
           break
@@ -217,7 +223,7 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
 #' is not compatible with the latest princurve on cran.
 #' @import R.oo
 .quantify_pathways_deregulation <- function(data, allgenes, syms, pathwaynames, normals = NULL, ranks = NULL,
-  attempts = 100, maximize_stability = TRUE, logfile = "", samplings = NULL, min_exp = 4, min_std = 0.4) {
+  attempts = 100, maximize_stability = TRUE, logfile = "", samplings = NULL, min_exp = 4, min_std = 0.4, maxit = 200) {
   cat(file = logfile, append = FALSE, "robust_score_bydist. min_exp=", min_exp, ", min_std=", min_std,
     "\n")
   data[data < min_exp] <- min_exp
@@ -276,8 +282,9 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
           cat(file = logfile, append = TRUE, "skipping pathway ", i, " k2=", k2, "\n")
         } else {
           pca <- t$x[, 1:k2]
+          maxitSetting <- maxit
           res <- .score_all_pathways_helper(pca, ranks, samplings, i, attempts, maximize_stability,
-          logfile, start = start)
+          logfile, start = start, maxit = maxitSetting)
           if (is.null(res)) {
           si <- NULL
           cat(file = logfile, append = TRUE, "skipping pathway ", i, "\n")
