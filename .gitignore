@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.vscode
+ignore/
+.ipynb_checkpoints
+..Rcheck/
+node_modules/
+temp/
+lilikoi.Rcheck
+*tar.gz

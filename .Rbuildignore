@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^ignore$
+^data\-raw$
+^\.git$
+^[^\/]+.r$
+makefile
+tar.gz
+ipynb
+cran-comments.md
