@@ -1,4 +1,9 @@
 library(tidyverse)
+
+
+if (!dir.exists("temp"))
+  dir.create("temp")
+
 system("wget http://smpdb.ca/downloads/smpdb_metabolites.csv.zip -O temp/smpdb_metabolites.csv.zip")
 system("cd temp; unzip smpdb_metabolites.csv.zip")
 smpdb = read_csv("temp/metabolites.csv")
