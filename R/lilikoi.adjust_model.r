@@ -31,16 +31,11 @@ lilikoi.adjust_model <- function(mlResults, PDSmatrix, selected_Pathways_Weka, m
   cartClasses <- stats::predict(best_model, newdata = testDf, type = "prob")
   cartClasses1 <- stats::predict(best_model, newdata = testDf)
   cartConfusion <- confusionMatrix(data = unlist(cartClasses1), testDf$subtype)
-  # ROC_pathway <-
-  # roc(predictor=cartClasses[[1]]$Normal,response=testDf$subtype,levels=rev(levels(testDf$subtype)))
   ROC_pathway <- roc(predictor = as.numeric(unlist(cartClasses[[1]][1])), response = testDf$subtype,
     levels = rev(levels(testDf$subtype)))
-  # graphics::plot(smooth(ROC,method='fitdistr'),print.auc=TRUE,col='green')
   smooth_method <- "binormal"
 
-  # pdf('factors.pdf',width=10,height=10)
   graphics::plot(pROC::smooth(ROC_pathway, method = smooth_method), col = "black", cex.lab = 1.5)
-  # graphics::plot(ROC_pathway,col='black')
   graphics::par(new = TRUE)
   train_index <- mlResults$train_inx
 
@@ -50,23 +45,17 @@ lilikoi.adjust_model <- function(mlResults, PDSmatrix, selected_Pathways_Weka, m
   ROC_factor <- .lilikoi.create_the_model(factor_data, train_index, method)
 
   graphics::plot(pROC::smooth(ROC_factor$ROC, method = smooth_method), col = "red", cex.lab = 1.5)
-  # graphics::plot(ROC_factor,col='red',print.auc=T)
   graphics::par(new = TRUE)
 
   pathway_factors_data <- cbind(factor_data[-1], prostate_df)
   colnames(pathway_factors_data)[which(names(pathway_factors_data) == "Label")] <- "subtype"
-  # print(head(pathway_factors_data))
   ROC_pathway_factors <- .lilikoi.create_the_model(pathway_factors_data, train_index, method)
   graphics::plot(ROC_pathway_factors$ROC, col = "blue", cex.lab = 1.5)
-
-  # graphics::plot(ROC_pathway_factors,col='blue')
 
   graphics::legend(0.5, 0.4, legend = c("Selected Pathways", "Clinical factors", "Selected pathways + clinical factors"),
     col = c("black", "red", "blue"), lty = 1:2, cex = 1.2)
 
   # dev.off()
-
-
 
   # plot the correlation between the pathways and the clinical factors
 

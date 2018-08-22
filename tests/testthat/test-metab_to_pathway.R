@@ -29,6 +29,12 @@ test_that("Matching works", {
   result = lilikoi.metab_to_pathway(names, "hmdb")
   matched = sum(result$FoundMatch == 1)
   # expect_equal(matched, 4)
+
+  # Test fuzzy matching
+  names = c("Asparagin")
+  result = lilikoi.metab_to_pathway(names, "name", agrep)
+  matched = sum(result$FoundMatch == 1)
+  expect_equal(matched, 1)
 })
 
 

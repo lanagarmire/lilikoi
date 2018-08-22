@@ -1,4 +1,4 @@
-lilikoi.metab_to_pathway <- function(metaboliteNames, searchType) {
+lilikoi.metab_to_pathway <- function(metaboliteNames, searchType, nameMatchFn = match) {
   #' A lilikoi.metab_to_pathway Function
   #'
   #' This function allows you to convert your metabolites id such as names, kegg ids, pubchem ids.
@@ -13,7 +13,7 @@ lilikoi.metab_to_pathway <- function(metaboliteNames, searchType) {
   #' @export
 
   if (searchType == "name") {
-    matchIndexes <- .lilikoi.name_mapping_exact(metaboliteNames)
+    matchIndexes <- .lilikoi.name_mapping(metaboliteNames, nameMatchFn)
   } else {
     matchIndexes <- .lilikoi.id_mapping(metaboliteNames, searchType)
   }
@@ -53,14 +53,16 @@ lilikoi._get_results_summary <- function(results) {
   list(matched = matched, unmatched = unmatched)
 }
 
-.lilikoi.name_mapping_exact <- function(metaboliteNames) {
+.lilikoi.name_mapping <- function(metaboliteNames, matchFn) {
   #' This function matches your metabolites names with databases
   #' with more than 20k metabolites. it allows you also to search among metabolite synonyms.
   #' This function was modified version of the name.match function in the below link:
   #' https://github.com/cangfengzhe/Metabo/blob/master/MetaboAnalyst/website/name_match.R
+  #'
+  #' To do fuzzy matching, pass agrep to matchFn
 
-  matchedNameIndices <- match(tolower(metaboliteNames), tolower(lilikoi::data.metaboAnalyst$name))
-  matchedSynIndices <- match(tolower(metaboliteNames), tolower(lilikoi::data.metaboAnalyst$synonym))
+  matchedNameIndices <- matchFn(tolower(metaboliteNames), tolower(lilikoi::data.metaboAnalyst$name))
+  matchedSynIndices <- matchFn(tolower(metaboliteNames), tolower(lilikoi::data.metaboAnalyst$synonym))
   matchIndexes <- ifelse(is.na(matchedNameIndices), matchedSynIndices, matchedNameIndices)
 
   matchIndexes

@@ -41,8 +41,8 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
   ## figure out why this is so slow
   maxitSetting <- maxit
   pds <- .quantify_pathways_deregulation(as.matrix(metaboliteLevelsWithHmdbIds), allgenes = metaboliteNames,
-    syms = pathwayList, pathwaynames = names(pathwayList), normals = isHealthySample, attempts = 5,
-    min_exp = 0, min_std = 0, maxit = maxitSetting)
+                                         syms = pathwayList, pathwaynames = names(pathwayList), normals = isHealthySample, attempts = 5,
+                                         min_exp = 0, min_std = 0, maxit = maxitSetting)
 
   pdsMatrix <- matrix(as.data.frame(pds$scores), nrow = length(names(pds$scores)), byrow = TRUE)
 
@@ -57,7 +57,7 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
   # The below complicated line simply turns our metabolite pathway table into the list needed by
   # pathifier
   lapply(split(pathwayMetaboliteTable, pathwayMetaboliteTable[, "pathway"]), function(x) x[, setdiff(names(x),
-    "pathway")])
+                                                                                                     "pathway")])
 }
 
 .getmeasuredgenesinpathway <- function(syms, allgenes) {
@@ -84,10 +84,10 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
     if (n > 0) {
       if (n == 1)
         t <- data[ind, ] else t <- colMeans(data[ind, ])
-      if (var(t) > 0) {
-        isin[i] <- TRUE
-        x <- c(x, t)
-      }
+        if (var(t) > 0) {
+          isin[i] <- TRUE
+          x <- c(x, t)
+        }
     }
   }
   if (is.null(x)) {
@@ -113,7 +113,6 @@ lilikoi.get_pd_scores <- function(metaboliteMeasurements, metabolitePathwayTable
       start <- as.matrix(start[, -1])
     }
     maxitSetting <- maxit
-    print(maxitSetting)
     c <- princurve::principal_curve(x, start = start, thresh = thresh, maxit = maxitSetting)
   }
   if (!is.null(c)) {

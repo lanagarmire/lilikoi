@@ -1,4 +1,4 @@
-lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPathways) {
+lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPathways, dependentVariableName = "Normal") {
   #' A machine learning Function
   #'
   #' This function for classification using 7 different machine learning algorithms
@@ -50,7 +50,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   cartClasses1 <- stats::predict(fit.cart, newdata = testDf)
   cartConfusion <- confusionMatrix(data = cartClasses1, testDf$subtype)
 
-  cart.ROC <- roc(predictor = cartClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  cart.ROC <- roc(predictor = cartClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 1] <- as.numeric(cart.ROC$auc)  # AUC
   performance_testing[2, 1] <- cartConfusion$byClass[1]  # SENS
@@ -78,7 +78,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   ldaClasses1 <- stats::predict(fit.lda, newdata = testDf)
   ldaConfusion <- confusionMatrix(data = ldaClasses1, testDf$subtype)
 
-  lda.ROC <- roc(predictor = ldaClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  lda.ROC <- roc(predictor = ldaClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 2] <- as.numeric(lda.ROC$auc)  # AUC
   performance_testing[2, 2] <- ldaConfusion$byClass[1]  # SENS
@@ -106,7 +106,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   svmClasses1 <- stats::predict(fit.svm, newdata = testDf)
   svmConfusion <- confusionMatrix(data = svmClasses1, testDf$subtype)
 
-  svm.ROC <- roc(predictor = svmClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  svm.ROC <- roc(predictor = svmClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 3] <- as.numeric(svm.ROC$auc)  # AUC
   performance_testing[2, 3] <- svmConfusion$byClass[1]  # SENS
@@ -134,7 +134,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   rfConfusion <- confusionMatrix(data = rfClasses1, testDf$subtype)
 
 
-  rf.ROC <- roc(predictor = rfClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  rf.ROC <- roc(predictor = rfClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 4] <- as.numeric(rf.ROC$auc)  # AUC
   performance_testing[2, 4] <- rfConfusion$byClass[1]  # SENS
@@ -161,7 +161,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   gbmConfusion <- confusionMatrix(data = gbmClasses1, testDf$subtype)
 
 
-  gbm.ROC <- roc(predictor = gbmClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  gbm.ROC <- roc(predictor = gbmClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 5] <- as.numeric(gbm.ROC$auc)  # AUC
   performance_testing[2, 5] <- gbmConfusion$byClass[1]  # SENS
@@ -188,7 +188,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   pamConfusion <- confusionMatrix(data = pamClasses1, testDf$subtype)
 
 
-  pam.ROC <- roc(predictor = pamClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  pam.ROC <- roc(predictor = pamClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 6] <- as.numeric(pam.ROC$auc)  # AUC
   performance_testing[2, 6] <- pamConfusion$byClass[1]  # SENS
@@ -214,7 +214,7 @@ lilikoi.machine_learning <- function(PDSmatrix, measurementLabels, significantPa
   logClasses <- stats::predict(fit.log, newdata = testDf, type = "prob")
   logClasses1 <- stats::predict(fit.log, newdata = testDf)
   logConfusion <- confusionMatrix(data = logClasses1, testDf$subtype)
-  log.ROC <- roc(predictor = logClasses$Normal, response = testDf$subtype, levels = rev(levels(testDf$subtype)))
+  log.ROC <- roc(predictor = logClasses[[dependentVariableName]], response = testDf$subtype, levels = rev(levels(testDf$subtype)))
 
   performance_testing[1, 7] <- as.numeric(log.ROC$auc)  # AUC
   performance_testing[2, 7] <- logConfusion$byClass[1]  # SENS
