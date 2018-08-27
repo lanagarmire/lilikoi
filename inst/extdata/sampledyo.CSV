@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons">5e0f88febb86f96c0520e14c578ee14ba67872b6,abbc5191535f7e95ba1254171676097ac26b5edc,93265af5ae8b86889d094456aadbb722300d9aeb,f72263abc0355e8a0eec74241ddb3c1e7aa44a81</script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.12.4];shiny[1.1.0];font-awesome[4.7.0];shinyWidgets[0.4.3.930];bttn[0.4.3.930];bootstrap[3.3.7];htmlwidgets[1.2];datatables-css[0.0.0];datatables-binding[0.4];crosstalk[1.0.0];ionrangeslider[2.1.6];strftime[0.9.2];selectize[0.11.2];AdminLTE[2.0.6];shinydashboard[0.7.0]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="shinyWidgets/shinyWidgets.css" rel="stylesheet" />
+<script src="shinyWidgets/shinyWidgets-bindings.min.js"></script>
+<link href="shinyWidgets/bttn/bttn.min.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<script src="htmlwidgets-1.2/htmlwidgets.js"></script>
+<link href="datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="datatables-binding-0.4/datatables.js"></script>
+<link href="crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="shared/strftime/strftime-min.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<link href="AdminLTE-2.0.6/AdminLTE.min.css" rel="stylesheet" />
+<link href="AdminLTE-2.0.6/_all-skins.min.css" rel="stylesheet" />
+<script src="AdminLTE-2.0.6/app.min.js"></script>
+<link href="shinydashboard-0.7.0/shinydashboard.css" rel="stylesheet" />
+<script src="shinydashboard-0.7.0/shinydashboard.min.js"></script>  <title></title>
+  <link rel="stylesheet" href="assets/spinner.css"/>
+  <link rel="stylesheet" href="css-loaders/css/fallback.css"/>
+  <link rel="stylesheet" href="css-loaders/css/load1.css"/>
+  <style>#spinner-49511cba2b16dc6965788f3dd388b95a, #spinner-49511cba2b16dc6965788f3dd388b95a:before, #spinner-49511cba2b16dc6965788f3dd388b95a:after {background: #0275D8} #spinner-49511cba2b16dc6965788f3dd388b95a {color: #0275D8}</style>
+  <style>#spinner-49511cba2b16dc6965788f3dd388b95a {font-size: 8px}spinner-49511cba2b16dc6965788f3dd388b95a8</style>
+  <style>#spinner-c2c251c8ba53180956f6603ae5b60384, #spinner-c2c251c8ba53180956f6603ae5b60384:before, #spinner-c2c251c8ba53180956f6603ae5b60384:after {background: #0275D8} #spinner-c2c251c8ba53180956f6603ae5b60384 {color: #0275D8}</style>
+  <style>#spinner-c2c251c8ba53180956f6603ae5b60384 {font-size: 8px}spinner-c2c251c8ba53180956f6603ae5b603848</style>
+  <style>#spinner-eeb17e705edea9dcb7b88ce6638663dc, #spinner-eeb17e705edea9dcb7b88ce6638663dc:before, #spinner-eeb17e705edea9dcb7b88ce6638663dc:after {background: #0275D8} #spinner-eeb17e705edea9dcb7b88ce6638663dc {color: #0275D8}</style>
+  <style>#spinner-eeb17e705edea9dcb7b88ce6638663dc {font-size: 8px}spinner-eeb17e705edea9dcb7b88ce6638663dc8</style>
+  <style>#spinner-5c4dce6ff9e8dcbd974b599f7839c4c5, #spinner-5c4dce6ff9e8dcbd974b599f7839c4c5:before, #spinner-5c4dce6ff9e8dcbd974b599f7839c4c5:after {background: #0275D8} #spinner-5c4dce6ff9e8dcbd974b599f7839c4c5 {color: #0275D8}</style>
+  <style>#spinner-5c4dce6ff9e8dcbd974b599f7839c4c5 {font-size: 8px}spinner-5c4dce6ff9e8dcbd974b599f7839c4c58</style>
+  <style>#spinner-70c74c3c60c98ec10dc97ff6a69fc493, #spinner-70c74c3c60c98ec10dc97ff6a69fc493:before, #spinner-70c74c3c60c98ec10dc97ff6a69fc493:after {background: #0275D8} #spinner-70c74c3c60c98ec10dc97ff6a69fc493 {color: #0275D8}</style>
+  <style>#spinner-70c74c3c60c98ec10dc97ff6a69fc493 {font-size: 8px}spinner-70c74c3c60c98ec10dc97ff6a69fc4938</style>
+  <style>#spinner-5a4dbf6897c905526f2aca3cd90c2096, #spinner-5a4dbf6897c905526f2aca3cd90c2096:before, #spinner-5a4dbf6897c905526f2aca3cd90c2096:after {background: #0275D8} #spinner-5a4dbf6897c905526f2aca3cd90c2096 {color: #0275D8}</style>
+  <style>#spinner-5a4dbf6897c905526f2aca3cd90c2096 {font-size: 8px}spinner-5a4dbf6897c905526f2aca3cd90c20968</style>
+  <style>#spinner-32c2cbe719cbf2dfb624a58d708a542d, #spinner-32c2cbe719cbf2dfb624a58d708a542d:before, #spinner-32c2cbe719cbf2dfb624a58d708a542d:after {background: #0275D8} #spinner-32c2cbe719cbf2dfb624a58d708a542d {color: #0275D8}</style>
+  <style>#spinner-32c2cbe719cbf2dfb624a58d708a542d {font-size: 8px}spinner-32c2cbe719cbf2dfb624a58d708a542d8</style>
+  <style>#spinner-33a87664c070997d8440602007e4e275, #spinner-33a87664c070997d8440602007e4e275:before, #spinner-33a87664c070997d8440602007e4e275:after {background: #0275D8} #spinner-33a87664c070997d8440602007e4e275 {color: #0275D8}</style>
+  <style>#spinner-33a87664c070997d8440602007e4e275 {font-size: 8px}spinner-33a87664c070997d8440602007e4e2758</style>
+  <style>#spinner-f45d80f903dda34395d0b6173582d673, #spinner-f45d80f903dda34395d0b6173582d673:before, #spinner-f45d80f903dda34395d0b6173582d673:after {background: #0275D8} #spinner-f45d80f903dda34395d0b6173582d673 {color: #0275D8}</style>
+  <style>#spinner-f45d80f903dda34395d0b6173582d673 {font-size: 8px}spinner-f45d80f903dda34395d0b6173582d6738</style>
+  <style>#spinner-dceb69eedaa4eb4740a87b8678320d40, #spinner-dceb69eedaa4eb4740a87b8678320d40:before, #spinner-dceb69eedaa4eb4740a87b8678320d40:after {background: #0275D8} #spinner-dceb69eedaa4eb4740a87b8678320d40 {color: #0275D8}</style>
+  <style>#spinner-dceb69eedaa4eb4740a87b8678320d40 {font-size: 8px}spinner-dceb69eedaa4eb4740a87b8678320d408</style>
+  <style>#spinner-7de35b26b177bc89a073728dafd8b558, #spinner-7de35b26b177bc89a073728dafd8b558:before, #spinner-7de35b26b177bc89a073728dafd8b558:after {background: #0275D8} #spinner-7de35b26b177bc89a073728dafd8b558 {color: #0275D8}</style>
+  <style>#spinner-7de35b26b177bc89a073728dafd8b558 {font-size: 8px}spinner-7de35b26b177bc89a073728dafd8b5588</style>
+  <style>#spinner-900cf7fed8a0561b40e3cdb5524b8340, #spinner-900cf7fed8a0561b40e3cdb5524b8340:before, #spinner-900cf7fed8a0561b40e3cdb5524b8340:after {background: #0275D8} #spinner-900cf7fed8a0561b40e3cdb5524b8340 {color: #0275D8}</style>
+  <style>#spinner-900cf7fed8a0561b40e3cdb5524b8340 {font-size: 8px}spinner-900cf7fed8a0561b40e3cdb5524b83408</style>
+  <style>#spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c, #spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c:before, #spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c:after {background: #0275D8} #spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c {color: #0275D8}</style>
+  <style>#spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c {font-size: 8px}spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c8</style>
+  <style>#spinner-fd3c174fdfe51e791ea6fa0858315c43, #spinner-fd3c174fdfe51e791ea6fa0858315c43:before, #spinner-fd3c174fdfe51e791ea6fa0858315c43:after {background: #0275D8} #spinner-fd3c174fdfe51e791ea6fa0858315c43 {color: #0275D8}</style>
+  <style>#spinner-fd3c174fdfe51e791ea6fa0858315c43 {font-size: 8px}spinner-fd3c174fdfe51e791ea6fa0858315c438</style>
+
+</head>
+
+<body class="skin-green" style="min-height: 611px;">
+  <div class="wrapper">
+    <header class="main-header">
+      <span class="logo"></span>
+      <nav class="navbar navbar-static-top" role="navigation">
+        <span style="display:none;">
+          <i class="fa fa-bars"></i>
+        </span>
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav"></ul>
+        </div>
+      </nav>
+    </header>
+    <aside id="sidebarCollapsed" class="main-sidebar" data-collapsed="false">
+      <section id="sidebarItemExpanded" class="sidebar">
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#shiny-tab-Logo" data-toggle="tab" data-value="Logo">
+              <i class="fa fa-play"></i>
+              <span>Begin</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Upload" data-toggle="tab" data-value="Upload">
+              <i class="fa fa-upload"></i>
+              <span>Data Upload</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Preview" data-toggle="tab" data-value="Preview">
+              <i class="fa fa-search"></i>
+              <span>Data Preview</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Mapping" data-toggle="tab" data-value="Mapping">
+              <i class="fa fa-table"></i>
+              <span>Feature Mapping</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Transformation" data-toggle="tab" data-value="Transformation">
+              <i class="fa fa-random"></i>
+              <span>Dimension Tranformation</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Selection" data-toggle="tab" data-value="Selection">
+              <i class="fa fa-check-circle"></i>
+              <span>Feature Selection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Classification" data-toggle="tab" data-value="Classification">
+              <i class="fa fa-barcode"></i>
+              <span>Classification and Prediction</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Clinical" data-toggle="tab" data-value="Clinical">
+              <i class="fa fa-industry"></i>
+              <span>Clinical Factors</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Model" data-toggle="tab" data-value="Model">
+              <i class="fa fa-adjust"></i>
+              <span>Model Adjustment</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Database" data-toggle="tab" data-value="Database">
+              <i class="fa fa-database"></i>
+              <span>Resources</span>
+            </a>
+          </li>
+          <div id="tabs" class="sidebarMenuSelectedTabItem" data-value="null"></div>
+        </ul>
+      </section>
+    </aside>
+    <div class="content-wrapper">
+      <section class="content">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Logo">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12" align="center">
+                  <div style="display: inline-block;">
+                    <img src="LogoScopic.png" height="700" width="700">
+                      <h3 style="color: black">A personalized pathway analysis of metabolomic data</h3>
+                      <button class="action-button bttn bttn-minimal bttn-md bttn-success bttn-no-outline" id="Click1" type="button">Begin</button>
+                    </img>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Upload">
+            <div class="container-fluid">
+              <div class="col-sm-12">
+                <div class="col-sm-6">
+                  <div class="box" style="height: 280px">
+                    <div class="box-body">
+                      <div class="form-group shiny-input-container">
+                        <label>Upload Data</label>
+                        <div class="input-group">
+                          <label class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                              Browse...
+                              <input id="Data" name="Data" type="file" style="display: none;"/>
+                            </span>
+                          </label>
+                          <input type="text" class="form-control" placeholder="No file selected" readonly="readonly"/>
+                        </div>
+                        <div id="Data_progress" class="progress progress-striped active shiny-file-input-progress">
+                          <div class="progress-bar"></div>
+                        </div>
+                      </div>
+                      <b>
+                        Or Use Our Data:
+                        <a id="out74cda1f60613fbd9" class="btn btn-default shiny-download-link " href="" target="_blank" download>
+                          <i class="fa fa-download"></i>
+                          Download
+                        </a>
+                      </b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-sm-offset-10">
+                <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click2" type="button">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Preview">
+            <div class="container-fluid">
+              <div class="col-sm-12">
+                <div class="col-sm-700px">
+                  <div class="box" style="height: 500px">
+                    <div class="box-body">
+                      <script src="assets/spinner.js"></script>
+                      <div class="shiny-spinner-output-container">
+                        <div class="load-container load1 shiny-spinner-hidden">
+                          <div id="spinner-49511cba2b16dc6965788f3dd388b95a" class="loader">Loading...</div>
+                        </div>
+                        <div style="height:400px" class="shiny-spinner-placeholder"></div>
+                        <div id="table" style="width:100%; height:auto; " class="datatables html-widget html-widget-output"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="shiny-html-output col-sm-4" id="tablestat1"></div>
+              </div>
+              <div class="col-sm-6">
+                <div class="shiny-html-output col-sm-4" id="tablestat2"></div>
+              </div>
+              <div class="col-sm-2 col-sm-offset-10">
+                <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click3" type="button">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Mapping">
+            <div class="container-fluid">
+              <div class="col-sm-12">
+                <h3>Transforms the metabolite names to the matching IDs using Lilikoi MetaTOpathway function</h3>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-6">
+                    <div class="box" style="height: 350px">
+                      <div class="box-body">
+                        <div class="shiny-spinner-output-container">
+                          <div class="load-container load1 shiny-spinner-hidden">
+                            <div id="spinner-c2c251c8ba53180956f6603ae5b60384" class="loader">Loading...</div>
+                          </div>
+                          <div style="height:400px" class="shiny-spinner-placeholder"></div>
+                          <div id="MTP" class="shiny-html-output"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-6">
+                    <div class="box" style="height: 100px">
+                      <div class="box-body">
+                        <div id="identifier" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline">
+                          <label class="control-label" for="identifier">Please Choose Identifier:</label>
+                          <div class="shiny-options-group">
+                            <label class="radio-inline">
+                              <input type="radio" name="identifier" value="name" checked="checked"/>
+                              <span>name</span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="identifier" value="pubchem"/>
+                              <span>pubchem</span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="identifier" value="chebi"/>
+                              <span>chebi</span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="identifier" value="kegg"/>
+                              <span>kegg</span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="identifier" value="metlin"/>
+                              <span>metlin</span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="identifier" value="hmdb"/>
+                              <span>hmdb</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-12">
+                    <div class="shiny-html-output col-sm-4" id="matchedBox"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-12">
+                    <div class="shiny-html-output col-sm-4" id="unmatchedBox"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-sm-offset-10">
+                <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click4" type="button">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Transformation">
+            <div class="container-fluid">
+              <h2>Transforms metabolites into pathway using Pathifier algorithm</h2>
+              <h6>
+                <i>Please wait... This will take a couple of minutes.</i>
+              </h6>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-12">
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-eeb17e705edea9dcb7b88ce6638663dc" class="loader">Loading...</div>
+                            </div>
+                            <div style="height:400px" class="shiny-spinner-placeholder"></div>
+                            <div id="PDS" style="width:100%; height:auto; " class="datatables html-widget html-widget-output"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-2 col-sm-offset-10">
+                    <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click5" type="button">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Selection">
+            <div class="container-fluid">
+              <h2>To Selects the most significant pathways related to phenotype. </h2>
+              <h6>
+                <i>If you did not get any selected pathwys, you can lower the threshold</i>
+              </h6>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="shiny-spinner-output-container">
+                    <div class="load-container load1 shiny-spinner-hidden">
+                      <div id="spinner-5c4dce6ff9e8dcbd974b599f7839c4c5" class="loader">Loading...</div>
+                    </div>
+                    <div id="SL" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-12">
+                    <div class="form-group shiny-input-container">
+                      <label class="control-label" for="thresh">Threshold</label>
+                      <input class="js-range-slider" id="thresh" data-min="0.5" data-max="0.6" data-from="0.54" data-step="0.001" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-12">
+                    <a id="DownloadFeatureSelection" class="btn btn-default shiny-download-link " href="" target="_blank" download>
+                      <i class="fa fa-download"></i>
+                      Download
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-2 col-sm-offset-10">
+                    <div class="row">
+                      <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click6" type="button">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Classification">
+            <div class="container-fluid">
+              <h5>This function will randomly separate the PDS score matrix with only
+                                          the selected pathways into training and testing sets. It will use seven
+                                          widely used machine learning algorithms to build the classification model
+                                          from the training set. It plots the pathway importance from each model and
+                                          its accuracy (AUC, sensitivity, specificity).</h5>
+              <div class="tabbable">
+                <ul class="nav nav-tabs" data-tabsetid="4834">
+                  <li class="active">
+                    <a href="#tab-4834-1" data-toggle="tab" data-value="Training">Training</a>
+                  </li>
+                  <li>
+                    <a href="#tab-4834-2" data-toggle="tab" data-value="Testing">Testing</a>
+                  </li>
+                  <li>
+                    <a href="#tab-4834-3" data-toggle="tab" data-value="ROC">ROC</a>
+                  </li>
+                  <li>
+                    <a href="#tab-4834-4" data-toggle="tab" data-value="Variable Importance">Variable Importance</a>
+                  </li>
+                  <li>
+                    <a href="#tab-4834-5" data-toggle="tab" data-value="Best Model">Best Model</a>
+                  </li>
+                  <li>
+                    <a href="#tab-4834-6" data-toggle="tab"></a>
+                  </li>
+                </ul>
+                <div class="tab-content" data-tabsetid="4834">
+                  <div class="tab-pane active" data-value="Training" id="tab-4834-1">
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-70c74c3c60c98ec10dc97ff6a69fc493" class="loader">Loading...</div>
+                            </div>
+                            <div id="CLPL1" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" data-value="Testing" id="tab-4834-2">
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-5a4dbf6897c905526f2aca3cd90c2096" class="loader">Loading...</div>
+                            </div>
+                            <div id="CLPL2" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" data-value="ROC" id="tab-4834-3">
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-32c2cbe719cbf2dfb624a58d708a542d" class="loader">Loading...</div>
+                            </div>
+                            <div id="CLPL4" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" data-value="Variable Importance" id="tab-4834-4">
+                    <div class="form-group shiny-input-container">
+                      <label class="control-label" for="variable">Select Algorithm Importance:</label>
+                      <div>
+                        <select id="variable"><option value="1" selected>cart</option>
+<option value="2">lda</option>
+<option value="3">svm</option>
+<option value="4">rf</option>
+<option value="5">gmb</option>
+<option value="6">pam</option>
+<option value="7">log</option></select>
+                        <script type="application/json" data-for="variable" data-nonempty="">{}</script>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-33a87664c070997d8440602007e4e275" class="loader">Loading...</div>
+                            </div>
+                            <div id="CLVI" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <a id="DownloadCLVI" class="btn btn-default shiny-download-link " href="" target="_blank" download>
+                      <i class="fa fa-download"></i>
+                      Download
+                    </a>
+                  </div>
+                  <div class="tab-pane" data-value="Best Model" id="tab-4834-5">
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-f45d80f903dda34395d0b6173582d673" class="loader">Loading...</div>
+                            </div>
+                            <div id="CL" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-sm-offset-10" id="tab-4834-6">
+                    <div class="row">
+                      <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click7" type="button">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Clinical">
+            <div class="container-fluid">
+              <h3>This function adjusts the model using the imported clinical factors.</h3>
+              <h6>
+                <i>Model will be created using only the best performed model from the last step.</i>
+              </h6>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-12 col-sm-offset-1">
+                    <div class="shiny-spinner-output-container">
+                      <div class="load-container load1 shiny-spinner-hidden">
+                        <div id="spinner-dceb69eedaa4eb4740a87b8678320d40" class="loader">Loading...</div>
+                      </div>
+                      <div style="height:400px" class="shiny-spinner-placeholder"></div>
+                      <div id="CF" class="shiny-html-output"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-4 col-sm-offset-1">
+                    <div class="form-group shiny-input-container">
+                      <label>Upload Metadata (Optional)</label>
+                      <div class="input-group">
+                        <label class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                            Browse...
+                            <input id="Data2" name="Data2" type="file" style="display: none;"/>
+                          </span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="No file selected" readonly="readonly"/>
+                      </div>
+                      <div id="Data2_progress" class="progress progress-striped active shiny-file-input-progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-2 col-sm-offset-10">
+                    <div class="row">
+                      <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click8" type="button">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Model">
+            <div class="container-fluid">
+              <h3>Model Adjustemnt using clinical factors such as Age and ethnicity</h3>
+              <div class="tabbable">
+                <ul class="nav nav-tabs" data-tabsetid="3418">
+                  <li class="active">
+                    <a href="#tab-3418-1" data-toggle="tab" data-value="Variable Importance">Variable Importance</a>
+                  </li>
+                  <li>
+                    <a href="#tab-3418-2" data-toggle="tab" data-value="ROC">ROC</a>
+                  </li>
+                  <li>
+                    <a href="#tab-3418-3" data-toggle="tab" data-value="Correlation">Correlation</a>
+                  </li>
+                </ul>
+                <div class="tab-content" data-tabsetid="3418">
+                  <div class="tab-pane active" data-value="Variable Importance" id="tab-3418-1">
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-7de35b26b177bc89a073728dafd8b558" class="loader">Loading...</div>
+                            </div>
+                            <div id="MAPL2" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="box">
+                        <div class="box-body">
+                          <div class="shiny-spinner-output-container">
+                            <div class="load-container load1 shiny-spinner-hidden">
+                              <div id="spinner-900cf7fed8a0561b40e3cdb5524b8340" class="loader">Loading...</div>
+                            </div>
+                            <div id="MAPL3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" data-value="ROC" align="center" id="tab-3418-2">
+                    <div class="shiny-spinner-output-container">
+                      <div class="load-container load1 shiny-spinner-hidden">
+                        <div id="spinner-09a9bcb26adaacf5ee4afe8f6a4e2f0c" class="loader">Loading...</div>
+                      </div>
+                      <div id="MA" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" data-value="Correlation" align="center" id="tab-3418-3">
+                    <div class="shiny-spinner-output-container">
+                      <div class="load-container load1 shiny-spinner-hidden">
+                        <div id="spinner-fd3c174fdfe51e791ea6fa0858315c43" class="loader">Loading...</div>
+                      </div>
+                      <div id="MAPL1" class="shiny-plot-output" style="width: 800px ; height: 800px"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-sm-offset-10">
+                <button class="action-button bttn bttn-minimal bttn-sm bttn-success bttn-no-outline" id="Click9" type="button">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="shiny-tab-Database">
+            <div class="container-fluid">
+              <div class="col-sm-12" align="left">
+                <div style="display:inline-block;">
+                  <h3>
+                    <b>Resources:</b>
+                  </h3>
+                  <br/>
+                  <p>
+                    <b>Update DataBase</b>
+                    link Here
+                  </p>
+                </div>
+              </div>
+              <br/>
+              <div class="col-sm-12" align="left">
+                <div style="display:inline-block;">
+                  <p>
+                    <b>Github:</b>
+                  </p>
+                  <p>
+                    <div id="tab1" class="shiny-html-output"></div>
+                  </p>
+                </div>
+              </div>
+              <br/>
+              <div class="col-sm-12" align="left">
+                <div style="display:inline-block;">
+                  <p>
+                    <b>Mybinder:</b>
+                  </p>
+                  <p>
+                    <div id="tab2" class="shiny-html-output"></div>
+                  </p>
+                </div>
+              </div>
+              <br/>
+              <div class="col-sm-12" align="left">
+                <div style="display:inline-block;">
+                  <p>
+                    <b>Docker:</b>
+                    <p>docker pull fadhlyemen/lilikoi</p>
+                    <p>docker run -d --rm -ti -p 5001:8888 fadhlyemen/lilikoi start-notebook.sh --NotebookApp.token='‘</p>
+                  </p>
+                </div>
+              </div>
+              <br/>
+              <div class="col-sm-12" align="left">
+                <div style="display:inline-block;">
+                  <p>
+                    <b>Citation:</b>
+                  </p>
+                  <p>
+                    <i>F. Alakwaa, S. Huang, and L. Garmire, “Lilikoi: 
+                                                            an R package for personalized pathway-based classification modeling using 
+                                                            metabolomics data,” bioRxiv, 2018.</i>
+                  </p>
+                </div>
+              </div>
+              <br/>
+              <div class="col-sm-12" align="left">
+                <div style="display:inline-block;">
+                  <p>
+                    <b>Link:</b>
+                  </p>
+                  <p>
+                    <div id="tab3" class="shiny-html-output"></div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>

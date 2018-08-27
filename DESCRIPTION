@@ -1,10 +1,10 @@
 Package: lilikoi
-Title: Metabolomics Personalized Pathway Analysis Tool
+Title: Metabolomics personlaized pathway analysis tool
 Version: 0.1.0
-Authors@R: c(
+Authors@R:c(
  person("Fadhl", "Alakwaa", email = "falakwaa@hawaii.edu", role = c("aut", "cre")),
  person("Sijia", "Huang", email = "scarlettcanny@gmail.com", role = c( "aut")))
-Description: Computes the pathway deregulation score for a given set of metabolites, selects the pathways with the highest mutual information and then uses them to build a classifier. F. Alakwaa, S. Huang, and L. Garmire (2018) <doi:10.1101/283408>.
+Description: This package computes the pathway deregulation score for the metabolites, selects the pathway with the highest mutual information and then uses them to build a classifier.
 Imports:
 	caret,
   corrplot,
@@ -19,19 +19,25 @@ Imports:
   infotheo,
   Matrix,
   pamr,
-  R.oo,
-  princurve,
   pROC,
   randomForest,
   reshape2,
   RWeka,
-  stringr
-Depends: R (>= 3.4.0)
+  stringr,
+  shiny,
+  DT,
+  shinydashboard,
+  shinyjs,
+  shinycssloaders,
+  shinyWidgets,
+  colourpicker,
+  rsconnect,
+  roxygen2,
+  pathifier,
+  tidyverse,
+  readr
+Depends: R (>= 3.4.3)
 License: GPL-2
-Encoding: UTF-8
+Encoding:UTF-8
 LazyData: true
-URL: https://github.com/lanagarmire/lilikoi
-BugReports: https://github.com/lanagarmire/lilikoi/issues
 RoxygenNote: 6.0.1.9000
-Suggests:
-    testthat

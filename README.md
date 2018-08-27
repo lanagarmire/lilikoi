@@ -1,69 +1,36 @@
-## Lilikoi is a novel tool for personalized pathway analysis of metabolomics data.
+## Lilikoi is a novel tool for personalized pathway analysis of metabolomics data. 
 
-Lilikoi computes the pathway deregulation score for a given set of metabolites, selects the pathways with the highest mutual information and then uses them to build a classifier.
+## Prerequisites
 
-"Lilikoi: an R package for personalized pathway-based classification modeling using metabolomics data. F. Alakwaa, S. Huang, and L. Garmire (2018) \doi{10.1101/283408}."
-
-## Installation
+To install all the required packages without overwriting your installed packages, you can run the below lines:
 
 ```
-install.packages("lilikoi")
+list.of.packages <- c("ggplot2", "caret","devtools", "dplyr","RWeka","infotheo","pROC","reshape2","corrplot", "stringr", "Hmisc", "Matrix", "randomForest", "glmnet", "gbm", "e1071", "pamr")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
-# Or for the latest dev version:
+source("https://bioconductor.org/biocLite.R")
+biocLite("pathifier")
+```
+
+## Installation
+```
 devtools::install_github("lanagarmire/lilikoi")
 ```
 
-## Example
+If you have a problem installing Rweka as it requires Java, you can reconfigure R from the command line by running the below line:
 
 ```
-# library(lilikoi)
-
-filename <- system.file("extdata", "plasma_breast_cancer.csv", package = "lilikoi")
-metaboliteMeasurements <- read.csv(file = filename, check.names = FALSE, row.names = 1)
-metaboliteNames <- colnames(metaboliteMeasurements)[-1]
-clinicalFactorsData <- read.csv(file = system.file("extdata", "plasma_breast_cancer_Meta.csv",
-  package = "lilikoi"))
-
-# The below lines shrink the dataset for faster test runs. Remove them to operate on
-# full dataset
-metaboliteMeasurements <- metaboliteMeasurements[, 1:20]
-metaboliteNames <- colnames(metaboliteMeasurements)[-1]
-
-metabolitePathwayTable <- lilikoi.metab_to_pathway(metaboliteNames, "name")
-
-# We use a subset of the database to speed up tests.
-# Swap the comments on the below two lines to run on the full database.
-# PDSmatrix <- lilikoi.get_pd_scores(metaboliteMeasurements, metabolitePathwayTable)
-PDSmatrix <- lilikoi.get_pd_scores(metaboliteMeasurements, metabolitePathwayTable,
-  lilikoi::data.smpdb[1:25,])
-
-
-significantPathways <- lilikoi.select_pathways(PDSmatrix, metaboliteMeasurements,
-  threshold = 0.42, method = "gain")
-
-mlResults <- lilikoi.machine_learning(PDSmatrix, metaboliteMeasurements$Label,
-  significantPathways)
-
-finalModel <- lilikoi.adjust_model(mlResults$mlResults, PDSmatrix, significantPathways,
-  metaboliteMeasurements, clinicalFactorsData, factors = c("Age", "Race"))
+R CMD javareconf
 ```
-
-## Updating the External Databases
-
-Lilikoi depends on data from HMDB, SMPDB, and MetaboAnalyst. This library ships with the latest data as
-of the date of publication. To update to the latest data from these sources, load and run the
-`lilikoi.update_database()` method found in the `lilikoi.update_database.r` file.
-
-Warning: the datasets are large (>5GB) and this step may take greater than 20 minutes.
 
 # Built By
+* Fadhl Alakwaa https://github.com/FADHLyemen
+* Sijia Huang  https://github.com/scarlettcanny
 
-*   Fadhl Alakwaa https://github.com/FADHLyemen
-*   Sijia Huang https://github.com/scarlettcanny
+# Example Code
+https://github.com/lanagarmire/lilikoi/blob/master/lilikoi_example.ipynb
+https://mybinder.org/v2/gh/FADHLyemen/lilikoi_Fadhl/master
 
-# More Examples
-
-*   Shiny Version: http://lilikoi.garmiregroup.org
-*   https://github.com/lanagarmire/lilikoi/blob/master/lilikoi_example.ipynb
-*   https://github.com/lanagarmire/lilikoi/blob/master/lilikoiExample.r
-*   https://mybinder.org/v2/gh/FADHLyemen/lilikoi_Fadhl/master
+# To contribute
+library(devtools)
